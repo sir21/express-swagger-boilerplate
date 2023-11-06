@@ -1,47 +1,28 @@
-const { sayHelloTo } = require('../controllers/hello');
+const { sayHelloTo } = require("../controllers/hello");
 
-/**
- * @swagger
- *
- * /hello:
- *  get:
- *    summary: Returns greetings
- *    parameters:
- *      - in: query
- *        name: name
- *        description: name to greet
- *        schema:
- *          type: string
- *    responses:
- *      200:
- *        description: hello
- *        schema:
- *          type: string
- *    
- *  post:
- *    summary: Returns greetings with body data
- *    requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *                 description: The user's name.
- *                 example: Leanne Graham
- *    responses:
- *      200:
- *        description: hello
- *        schema:
- *          type: string
- */
-module.exports = app => {
-  app.route('/hello').get((req, res) => {
+module.exports = (app) => {
+  /**
+   * GET /hello
+   * @summary This is the summary of the endpoint
+   * @param {string} name.query.required - name param for greeting
+   * @return {string} 200 - success response
+   */
+  app.get('/hello', (req, res) => {
     res.send(sayHelloTo(req.query.name));
-  }).post((req, res) => {
-    console.log(req.body);
+  });
+
+  /**
+   * A RequestHelloBody
+   * @typedef {object} RequestHelloBody
+   * @property {string} name - name for greeting
+   */
+  /**
+   * POST /hello
+   * @summary This is the summary of the endpoint
+   * @param {RequestHelloBody} request.body.required - name param for greeting
+   * @return {string} 200 - success response
+   */
+  app.post("/hello", (req, res) => {
     res.send(sayHelloTo(req.body.name));
   });
 };

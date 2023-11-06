@@ -1,19 +1,17 @@
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+const expressJSDocSwagger = require("express-jsdoc-swagger");
 
-module.exports = app => {
+module.exports = (app) => {
   const options = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'Hello World',
-        version: '1.0.0',
+    info: {
+      version: '1.0.0',
+      title: 'Hello world',
+      license: {
+        name: 'MIT',
       },
     },
-    apis: ['./routers/*.js'] // reference from node is running
+    filesPattern: ['../routers/**.js'],
+    baseDir: __dirname,
   };
 
-  const swaggerSpec = swaggerJSDoc(options);
-
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  expressJSDocSwagger(app)(options);
 };
