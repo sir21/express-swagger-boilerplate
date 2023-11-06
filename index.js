@@ -1,9 +1,11 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const port = 3000;
 const loaders = require('./loaders');
 
 async function startServer() {
   const app = express();
+  app.use(bodyParser.json());
 
   await loaders.init(app);
 
